@@ -5,10 +5,11 @@ Spring Boot example project with
 - some example REST endpoints
 - in-memory repository
 - some Spring Boot Actuator endpoints enabled
-- metrics collection with Micrometer https://micrometer.io/ for Prometheus https://prometheus.io/
-- structured logging with Logstash Logback Encoder https://github.com/logstash/logstash-logback-encoder
-- log management using Promtail agent for Loki https://grafana.com/oss/loki/
-- monitoring and logging dashboards with Grafana https://grafana.com/
+- standard metrics collection via Micrometer https://micrometer.io/ for Prometheus https://prometheus.io/
+- TODO planned: custom metrics example via Micrometer
+- structured logging via Logstash Logback Encoder https://github.com/logstash/logstash-logback-encoder
+- log management via Promtail agent for Loki https://grafana.com/oss/loki/
+- monitoring and logging dashboards for Grafana https://grafana.com/
 - TODO planned: distributed tracing via Spring Cloud Sleuth https://spring.io/projects/spring-cloud-sleuth
 
 ## Example Endpoints
@@ -57,7 +58,7 @@ GET http://localhost:8080/actuator/info
 ### Health
 GET http://localhost:8080/actuator/health
 
-### Prometheus
+### Prometheus Metrics
 GET http://localhost:8080/actuator/prometheus
 
 ## Logfiles
@@ -74,7 +75,7 @@ The following tools are available:
 Prometheus can be reached via http://localhost:9090
 
 Incorporating a prometheus.yml configuration 
-scraping from `targets: ['localhost:9090']`
+scraping from `targets: ['host.docker.internal:8080']`
 with `metrics_path: '/actuator/prometheus'`.
 
 ### Promtail
@@ -86,7 +87,7 @@ to Loki endpoint http://monitoring-loki:3100/loki/api/v1/push
 Loki is currently left to default configuration using the filesystem
 for both index and chunks storage.
 
-Loki can be reached via http://localhost:3100 
+Loki is runnung on http://localhost:3100 
 with e.g. http://localhost:3100/metrics being an available endpoint
 
 ### Grafana
@@ -100,4 +101,5 @@ An example dashboard named "Experiment" is already configured and loaded
 using request metrics from our example app provided via Prometheus.
 
 Loki logs can be found and explored using LogQL label `{job="monitoring-demo"}`.
-TODO planned: example dashboards for log data
+
+TODO planned: example dashboard for log data
