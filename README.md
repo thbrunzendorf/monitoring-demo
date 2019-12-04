@@ -89,17 +89,20 @@ for both index and chunks storage.
 
 Loki is runnung on http://localhost:3100 
 with e.g. http://localhost:3100/metrics being an available endpoint
+and http://localhost:3100/loki/api/v1/query?query=%7Bjob=%22monitoring-demo%22%7D being a valid query.
 
 ### Grafana
 Grafana can be reached via http://localhost:3000
 
 It is incorporating a datasource.yaml configuration
-with a datasource pointing at Prometheus via `url: http://monitoring-prometheus:9090`
-and another datasource pointing at Loki via `url: http://monitoring-loki:3100`.
+with the following datasources defined:
+- monitoring-prometheus-datasource of type prometheus 
+pointing at Prometheus via `url: http://monitoring-prometheus:9090`
+- monitoring-loki-datasource of type loki
+pointing at Loki via `url: http://monitoring-loki:3100`
+- monitoring-loki-as-prometheus-datasource of type prometheus
+pointing at Loki via `url: http://monitoring-loki:3100/loki`
 
 An example dashboard named "Experiment" is already configured and loaded
-using request metrics from our example app provided via Prometheus.
-
-Loki logs can be found and explored using LogQL label `{job="monitoring-demo"}`.
-
-TODO planned: example dashboard for log data
+using request metrics from our example app provided via Prometheus
+as well as log entries and log metrics provided via Loki.

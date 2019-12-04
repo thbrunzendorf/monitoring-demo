@@ -12,3 +12,8 @@ datasources:
     access: proxy
     url: http://monitoring-loki:3100
     editable: true
+  - name: monitoring-loki-as-prometheus-datasource
+    type: prometheus
+    access: proxy
+    url: http://monitoring-loki:3100/loki
+    editable: true
