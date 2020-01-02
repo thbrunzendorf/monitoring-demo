@@ -66,7 +66,8 @@ Logs are written as text to STDOUT
 and as structured JSON to `./logs/monitoring.log`
 
 ## Starting Monitoring and Logging Tools
-Monitoring and logging tools can be started via docker-compose
+Monitoring and logging tools can be started in path `./docker` via docker-compose
+
 `docker-compose up`
 
 The following tools are available:
