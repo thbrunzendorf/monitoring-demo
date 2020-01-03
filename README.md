@@ -10,7 +10,8 @@ Spring Boot example project with
 - structured logging via Logstash Logback Encoder https://github.com/logstash/logstash-logback-encoder
 - log management via Promtail agent for Loki https://grafana.com/oss/loki/
 - monitoring and logging dashboards for Grafana https://grafana.com/
-- TODO planned: distributed tracing via Spring Cloud Sleuth https://spring.io/projects/spring-cloud-sleuth
+- distributed tracing via Spring Cloud Sleuth https://spring.io/projects/spring-cloud-sleuth for Jaeger https://www.jaegertracing.io/
+- TODO planned: custom tracing spans example via Spring Cloud Sleuth
 
 ## Example Endpoints
 The application when started locally is running on port 8080
@@ -88,7 +89,7 @@ to Loki endpoint http://monitoring-loki:3100/loki/api/v1/push
 Loki is currently left to default configuration using the filesystem
 for both index and chunks storage.
 
-Loki is runnung on http://localhost:3100 
+Loki is running on http://localhost:3100 
 with e.g. http://localhost:3100/metrics being an available endpoint
 and http://localhost:3100/loki/api/v1/query?query=%7Bjob=%22monitoring-demo%22%7D being a valid query.
 
@@ -107,3 +108,12 @@ pointing at Loki via `url: http://monitoring-loki:3100/loki`
 An example dashboard named "Experiment" is already configured and loaded
 using request metrics from our example app provided via Prometheus
 as well as log entries and log metrics provided via Loki.
+
+### Jaeger
+Jaeger UI can be reached via http://localhost:16686
+
+Started using jaegertracing/all-in-one image,
+Jaeger collector is configured to expose a Zipkin compatible endpoint under http://localhost:9411/.
+
+POST http://localhost:9411/api/v2/spans uploads a list of spans encoded per content-type, for example json.
+See also https://zipkin.io/zipkin-api/#/default/post_spans
