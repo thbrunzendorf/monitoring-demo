@@ -1,7 +1,7 @@
 version: "3"
 services:
   prometheus:
-    image: prom/prometheus:v2.15.2
+    image: prom/prometheus:v2.16.0
     container_name: monitoring-prometheus
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
@@ -22,7 +22,7 @@ services:
     ports:
       - "3100:3100"
   grafana:
-    image: grafana/grafana:6.5.3
+    image: grafana/grafana:6.6.2
     container_name: monitoring-grafana
     volumes:
       - ./grafana/grafana.ini:/etc/grafana/grafana.ini
@@ -35,7 +35,7 @@ services:
       - prometheus
       - loki
   jaeger:
-    image: jaegertracing/all-in-one:1.16.0
+    image: jaegertracing/all-in-one:1.17.0
     container_name: monitoring-jaeger
     command: "--collector.zipkin.http-port=9411"
     ports:
