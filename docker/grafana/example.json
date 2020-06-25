@@ -24,16 +24,22 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "monitoring-prometheus-datasource",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 9,
+        "h": 8,
         "w": 12,
         "x": 0,
         "y": 0
       },
       "hiddenSeries": false,
-      "id": 4,
+      "id": 10,
       "legend": {
         "avg": false,
         "current": false,
@@ -45,13 +51,12 @@
       },
       "lines": true,
       "linewidth": 1,
-      "links": [],
       "nullPointMode": "null",
       "options": {
         "dataLinks": []
       },
       "percentage": false,
-      "pointradius": 5,
+      "pointradius": 2,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [],
@@ -60,9 +65,9 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "http_server_requests_seconds_sum/http_server_requests_seconds_count",
-          "format": "time_series",
-          "intervalFactor": 1,
+          "expr": "rate(exampleData_created_total[1m])*60",
+          "interval": "",
+          "legendFormat": "",
           "refId": "A"
         }
       ],
@@ -70,7 +75,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "avg",
+      "title": "example data created per minute",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -110,6 +115,31 @@
     {
       "cacheTimeout": null,
       "datasource": "monitoring-loki-as-prometheus-datasource",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {},
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
       "gridPos": {
         "h": 8,
         "w": 12,
@@ -120,31 +150,17 @@
       "links": [],
       "options": {
         "displayMode": "lcd",
-        "fieldOptions": {
+        "orientation": "auto",
+        "reduceOptions": {
           "calcs": [
             "mean"
           ],
-          "defaults": {
-            "mappings": [],
-            "max": 100,
-            "min": 0,
-            "thresholds": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "override": {},
+          "fields": "",
           "values": false
         },
-        "orientation": "auto"
+        "showUnfilled": true
       },
-      "pluginVersion": "6.5.1",
+      "pluginVersion": "7.0.4",
       "targets": [
         {
           "expr": "sum(count_over_time({job=\"monitoring-demo\"}[30m])) by (level)",
@@ -157,45 +173,27 @@
       "type": "bargauge"
     },
     {
-      "datasource": "monitoring-loki-datasource",
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 8
-      },
-      "id": 7,
-      "options": {
-        "showTime": true,
-        "sortOrder": "Descending"
-      },
-      "targets": [
-        {
-          "expr": "{job=\"monitoring-demo\",level=\"INFO\"}",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "{job=\"monitoring-demo\",level=\"INFO\"}",
-      "type": "logs"
-    },
-    {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
       "datasource": "monitoring-prometheus-datasource",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 9
+        "y": 8
       },
       "hiddenSeries": false,
-      "id": 2,
+      "id": 4,
       "legend": {
         "avg": false,
         "current": false,
@@ -222,9 +220,11 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "http_server_requests_seconds_count",
+          "expr": "http_server_requests_seconds_sum/http_server_requests_seconds_count*1000",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
+          "legendFormat": "",
           "refId": "A"
         }
       ],
@@ -232,7 +232,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "http_server_requests_seconds_count",
+      "title": "avg request duration in ms",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -268,17 +268,49 @@
         "align": false,
         "alignLevel": null
       }
+    },
+    {
+      "datasource": "monitoring-loki-datasource",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "id": 7,
+      "options": {
+        "showLabels": false,
+        "showTime": true,
+        "sortOrder": "Descending",
+        "wrapLogMessage": false
+      },
+      "targets": [
+        {
+          "expr": "{job=\"monitoring-demo\",level=\"INFO\"}",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "{job=\"monitoring-demo\",level=\"INFO\"}",
+      "type": "logs"
     }
   ],
   "refresh": false,
-  "schemaVersion": 21,
+  "schemaVersion": 25,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": []
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-3h",
     "to": "now"
   },
   "timepicker": {
@@ -309,5 +341,5 @@
   "timezone": "",
   "title": "Experiment",
   "uid": "6-3HOwxWk",
-  "version": 3
+  "version": 1
 }
