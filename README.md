@@ -6,7 +6,7 @@ Spring Boot example project with
 - in-memory repository
 - some Spring Boot Actuator endpoints enabled
 - standard metrics collection via Micrometer https://micrometer.io/ for Prometheus https://prometheus.io/
-- TODO planned: custom metrics example via Micrometer
+- custom metrics example via Micrometer: a custom meter of type `Counter` called `exampleData_created_total`
 - structured logging via Logstash Logback Encoder https://github.com/logstash/logstash-logback-encoder
 - log management via Promtail agent for Loki https://grafana.com/oss/loki/
 - monitoring and logging dashboards for Grafana https://grafana.com/

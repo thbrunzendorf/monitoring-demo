@@ -1,5 +1,6 @@
 package de.thbrunzendorf.monitoring;
 
+import io.micrometer.core.instrument.MeterRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,11 @@ public class ExampleController {
 
     private ExampleRepository repository;
 
-    public ExampleController(@Autowired ExampleRepository repository) {
+    private MeterRegistry meterRegistry;
+
+    public ExampleController(@Autowired ExampleRepository repository, MeterRegistry meterRegistry) {
         this.repository = repository;
+        this.meterRegistry = meterRegistry;
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/example")
@@ -28,6 +32,7 @@ public class ExampleController {
     public void createExampleData(@RequestBody ExampleData data) {
         logger.info("received example POST request");
         repository.create(data);
+        meterRegistry.counter("exampleData.created", "name", data.getName()).increment(data.getValue());
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/example/{name}")
